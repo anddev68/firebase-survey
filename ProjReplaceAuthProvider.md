@@ -16,13 +16,36 @@ FriendlyChat.prototype.signIn = function() {
 #### 結論
 [このページ](https://firebase.google.com/docs/auth/web/start?hl=ja)の通りに進めれば良さそう。
 
-###### とりあえず適当に新規登録ボタンを作る。
+###### 1.とりあえず適当に新規登録ボタンを作る。
+index.htmlの55行目 Header Section当たりにでも追加したらよさげ。
+
 ```
 <button hidden id="sign-up" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white">
   Sign-up
 </button>
 ```
 
+###### 2.バインドしましょう。
+main.jsに戻って、リスナーとショートカットをそれぞれ追加。
+
+```
+this.signUpButton = document.getElementById('sign-up');
+```
+
+```
+this.signUpButton.addEventListener('click', this.signUp.bind(this));
+```
+
+```
+FriendlyChat.prototype.signUp = function() {
+  // TODO
+};
+
+```
+
+
+
+#### 用語集
 
 ##### firebase.auth.GoogleAuthProvider : firebase.auth.AuthProvider
 こいつは、Googleアカウントによるログインを提供するクラス。
