@@ -20,7 +20,7 @@ FriendlyChat.prototype.signIn = function() {
 index.htmlの55行目 Header Section当たりにでも追加したらよさげ。
 
 ```
-<button hidden id="sign-up" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white">
+<button id="sign-up" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white">
   Sign-up
 </button>
 ```
@@ -40,9 +40,42 @@ this.signUpButton.addEventListener('click', this.signUp.bind(this));
 FriendlyChat.prototype.signUp = function() {
   // TODO
 };
-
 ```
 
+##### 3.新規登録の処理を書きます。
+ガイドの通りに、さっき作ったsignUp関数を書き換えます。
+
+```
+FriendlyChat.prototype.signUp = function() {
+  var email = "bbb@gmail.com";
+  var password = "adminadmin";
+  firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
+    // Handle Errors here.
+    var errorCode = error.code;
+    var errorMessage = error.message;
+    console.log(errorMessage)
+  });
+};
+```
+
+##### 4.ログインの処理を置き換えます。
+signIn関数をGoogleAuthProviderからEmail/Password形式に変えます。
+
+```
+FriendlyChat.prototype.signIn = function() {
+  // Sign in Firebase using popup auth and Google as the identity provider.
+  //var provider = new firebase.auth.GoogleAuthProvider();
+  //this.auth.signInWithPopup(provider);
+  var email = "bbb@gmail.com";
+  var password = "adminadmin";
+  this.auth.createUserWithEmailAndPassword(email, password).catch(function(error) {
+    // Handle Errors here.
+    var errorCode = error.code;
+    var errorMessage = error.message;
+    console.log(errorMessage);
+   } );
+};
+```
 
 
 #### 用語集
