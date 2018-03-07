@@ -15,6 +15,7 @@ FriendlyChat.prototype.signIn = function() {
 
 #### 結論
 [このページ](https://firebase.google.com/docs/auth/web/start?hl=ja)の通りに進めれば良さそう。
+ただし、ダイアログとか作ってないのでメール/パスワードがマジックナンバーになってます。
 
 ###### 1.とりあえず適当に新規登録ボタンを作る。
 index.htmlの55行目 Header Section当たりにでも追加したらよさげ。
