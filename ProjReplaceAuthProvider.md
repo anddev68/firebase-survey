@@ -78,6 +78,8 @@ FriendlyChat.prototype.signIn = function() {
 };
 ```
 
+GoogleAuthProviderの仲間で、EmailAuthProviderなるものも存在するが、こいつはsignInWithPopupが使えねえ。
+
 
 #### 用語集
 
