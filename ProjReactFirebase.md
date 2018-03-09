@@ -21,7 +21,9 @@ npm install react-native-cli -g
 react-native init sample
 ```
 
-先にエミュレータを立ち上げておき、実行する。
+先にAndroidエミュレータを立ち上げておき、実行する。
 ```
 react-native run-android
 ```
+
+Android上にHello World的なページが表示されたらOK。
