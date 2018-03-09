@@ -27,3 +27,11 @@ react-native run-android
 ```
 
 Android上にHello World的なページが表示されたらOK。
+
+##### 3. ReactNativeFirebase(RNFirebase)の導入
+基本的に[ここ](https://rnfirebase.io/docs/v3.3.x/installation/initial-setup)の通りにやる。以下、抜粋。
+
+1. Firebaseプロジェクトは作成済みである。（なければ作る）
+2. Firebaseコンソールからアプリを追加ボタンを押し、google-services.jsonを手に入れる。
+3. google-services.jsonをApp配下に置く。
+4. 2種類のgradleを書き換える。(プロジェクト配下とapp配下を間違えないように注意）
