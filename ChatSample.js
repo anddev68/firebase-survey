@@ -24,7 +24,11 @@ export default class App extends React.Component {
     super(props);
     this.state = {
       messageInputValue: '',
+      messages: 'Chat log Here',
     };
+
+    this.loadMessage();
+    this.render();
   }
 
   /*
@@ -35,49 +39,45 @@ export default class App extends React.Component {
     firebase.database().ref('messages').push({
       name: "testuser",
       text: message,
-    }).then(function() {
-      console.warn("Uploaded!");
-      //  ばいんどいらない
-    }.bind(this)).catch(function(error) {
-      console.error('Error writing new message to Firebase Database', error);
+    }).then(() => {
+      console.warn('Uploaded');
+    }, e => {
+      console.error(e);
     });
   }.bind(this);
 
+  /*
+    メッセージをDBから読み込むメソッド
+  */
+  loadMessage = function(){
+    var messagesRef = firebase.database().ref('messages');
+    var setMessage = function(data) {
+      var val = data.val();
+      //this.displayMessage(data.key, val.name, val.text, val.photoUrl, val.imageUrl);
+      this.setState({messages: this.state.messages + "\n" + val.text});
+      console.warn(val.text);
+    }.bind(this);
+    messagesRef.limitToLast(12).on('child_added', setMessage);
+    messagesRef.limitToLast(12).on('child_changed', setMessage);
+  }.bind(this);
+
+  /*
+    描画メソッド
+  */
   render() {
     return(
       <View>
-
         <TextInput 
           onChangeText={(text)=>this.setState({messageInputValue: text})} />
         <Button
           title="Send"
           onPress={this.saveMessage} />
-
+        <Text>
+          {this.state.messages}
+        </Text>
       </View>
     );
   }
 }
 
-
-
-
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
 
