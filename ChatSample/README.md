@@ -34,3 +34,7 @@ import io.invertase.firebase.storage.RNFirebaseStoragePackage;
       );
     }
 ```
+
+#### 分かったことその他
+- 途中からデータ構造が変わっても追加可能。
+- ユーザ認証なくても書き込み可能。（アプリ側でUserチェックするか...？）
