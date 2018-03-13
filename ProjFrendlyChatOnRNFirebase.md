@@ -46,5 +46,26 @@ import io.invertase.firebase.storage.RNFirebaseStoragePackage;
     }
 ```
 
-#### 2.ログイン機構をjsで書く。
+#### 2.ログイン機構をjsで書く。(App.js)
+メールアドレスとパスワードはとりあえず固定にしておいて、ログインしてみる。
+```
+class App extends React.Component {
+  // 省略
+  signIn(){
+    var email = "bbb@gmail.com";
+    var password = "hogehoge";
+    firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        console.error(errorMessage);
+    });
+  }
+}
+```
+
+上記メソッドは非推奨らしいので、下記メソッドのほうが良さそう。
+```
+createUserAndRetrieveDataWithEmailAndPassword(email, password).catch(function(error) {
+```
 
