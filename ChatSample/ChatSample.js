@@ -25,19 +25,57 @@ export default class App extends React.Component {
     this.state = {
       messageInputValue: '',
       messages: 'Chat log Here',
+      user: null,
     };
 
-    this.loadMessage();
-    this.render();
+    this.database = firebase.database();
+    this.auth = firebase.auth();
+
+    //  面倒なのでオートログインにした
+    this.signIn("bbb@gmail.com", "adminadmin");
+
+    //  ステータスがへんかしたときのハンドル
+    this.auth.onAuthStateChanged((user)=>{
+      if (user) {
+        this.setState({user: user});
+        //  メッセージをロードする
+        this.loadMessage();
+      } else {
+        // No user is signed in.
+      }
+    });
   }
+
+  /*
+    signメソッド
+  */
+  signIn = function(email, password){
+    this.auth.signInWithEmailAndPassword(email, password).catch(function(error) {
+      // Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      console.error(errorMessage);
+    });
+  }.bind(this);
+
+
+  /*
+    signoutメソッド
+  */
+  signOut = function(){
+
+  }.bind(this);
+
 
   /*
     メッセージをDBに保存するメソッド
   */
   saveMessage = function(e){
     var message = this.state.messageInputValue;
-    firebase.database().ref('messages').push({
-      name: "testuser",
+    var name = this.state.user.email;
+    var uid = this.state.user.uid;
+    this.database.ref(uid).push({
+      name: name,
       text: message,
     }).then(() => {
       console.warn('Uploaded');
@@ -50,7 +88,8 @@ export default class App extends React.Component {
     メッセージをDBから読み込むメソッド
   */
   loadMessage = function(){
-    var messagesRef = firebase.database().ref('messages');
+    var uid = this.state.user.uid;
+    var messagesRef = this.database.ref(uid);
     var setMessage = function(data) {
       var val = data.val();
       //this.displayMessage(data.key, val.name, val.text, val.photoUrl, val.imageUrl);
@@ -64,9 +103,14 @@ export default class App extends React.Component {
   /*
     描画メソッド
   */
-  render() {
+  render = function(){
+    if(!this.state.user) return null;
+
     return(
       <View>
+        <Text>
+          {this.state.user.uid + " " +this.state.user.email}
+        </Text>
         <TextInput 
           onChangeText={(text)=>this.setState({messageInputValue: text})} />
         <Button
@@ -77,7 +121,5 @@ export default class App extends React.Component {
         </Text>
       </View>
     );
-  }
+  }.bind(this);
 }
-
-
