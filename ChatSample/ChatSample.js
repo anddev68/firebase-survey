@@ -32,7 +32,10 @@ export default class App extends React.Component {
     this.auth = firebase.auth();
 
     //  面倒なのでオートログインにした
-    this.signIn("bbb@gmail.com", "adminadmin");
+    //  bbb/cccでアカウント切り替えてみて
+    this.signOut();
+    //this.signIn("bbb@gmail.com", "adminadmin");
+    this.signIn("ccc@gmail.com", "adminadmin");
 
     //  ステータスがへんかしたときのハンドル
     this.auth.onAuthStateChanged((user)=>{
@@ -63,7 +66,7 @@ export default class App extends React.Component {
     signoutメソッド
   */
   signOut = function(){
-
+    this.auth.signOut();
   }.bind(this);
 
 
@@ -89,6 +92,7 @@ export default class App extends React.Component {
   */
   loadMessage = function(){
     var uid = this.state.user.uid;
+    //  ファイル名[uid].jsonからメッセージを取得する
     var messagesRef = this.database.ref(uid);
     var setMessage = function(data) {
       var val = data.val();
